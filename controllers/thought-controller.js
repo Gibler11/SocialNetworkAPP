@@ -1,67 +1,59 @@
-const { Comment, Pizza } = require('../models');
+const { Comment, Thought, User } = require('../models');
 
 const commentController = {
-  // add comment to pizza
-  addComment({ params, body }, res) {
-    console.log(params);
-    Comment.create(body)
-      .then(({ _id }) => {
-        return Pizza.findOneAndUpdate(
-          { _id: params.pizzaId },
-          { $push: { comments: _id } },
-          { new: true }
-        );
-      })
-      .then(dbPizzaData => {
-        console.log(dbPizzaData);
-        if (!dbPizzaData) {
-          res.status(404).json({ message: 'No pizza found with this id!' });
-          return;
-        }
-        res.json(dbPizzaData);
-      })
-      .catch(err => res.json(err));
+  // api thoughts
+  getAllThought(req, res) {
+    Thought.find({})
+    .populate({ path: "reactions", select: "-_v"})
+    .select("-_v")
+    .then(thoughtData => res.json(thoughtData))
+    .catch((err) => {
+      console.log(err);
+        res.status(400).json (err)
+    });
   },
 
-  // add reply to comment
-  addReply({ params, body }, res) {
-    Comment.findOneAndUpdate(
-      { _id: params.commentId },
-      { $push: { replies: body } },
-      { new: true, runValidators: true }
-    )
-      .then(dbPizzaData => {
-        if (!dbPizzaData) {
-          res.status(404).json({ message: 'No pizza found with this id!' });
-          return;
-        }
-        res.json(dbPizzaData);
-      })
-      .catch(err => res.json(err));
+  getThoughtbyID ({params},res){
+    Thought.findOne({_id: params.id})
+    .populate({ path: "reactions", select: "-_v"})
+    .select("-_v")
+    .then(thoughtData=>{
+    if (!thoughtData) {
+      res.status(400).json({ message: "invalid id"});
+      return;
+    }
+    res.json(thoughtData);
+    })
+    .catch((err)=> res.json(err));
   },
-
-  // remove comment
-  removeComment({ params }, res) {
-    Comment.findOneAndDelete({ _id: params.commentId })
-      .then(deletedComment => {
-        if (!deletedComment) {
-          return res.status(404).json({ message: 'No comment with this id!' });
-        }
-        return Pizza.findOneAndUpdate(
-          { _id: params.pizzaId },
-          { $pull: { comments: params.commentId } },
-          { new: true }
-        );
-      })
-      .then(dbPizzaData => {
-        if (!dbPizzaData) {
-          res.status(404).json({ message: 'No pizza found with this id!' });
-          return;
-        }
-        res.json(dbPizzaData);
-      })
-      .catch(err => res.json(err));
+  createThought({params, body},res){
+    Thought.create(body)
+    .then(({_id}) => {
+      return User.findOneAndUpdate(
+        {_id: params.userId},
+        {$push: {thought: _id}},
+        {new: true}
+      );
+    })
+    .then(thoughtData=>{
+      if (!thoughtData) {
+        res.status(400).json({ message: "invalid id"});
+        return;
+      }
+      res.json(thoughtData);
+    })
+    .catch((err)=> res.json(err));
   },
+  
+      
+      
+      
+      
+      
+      
+      
+ 
+  
   // delete reaction
   deleteReaction({ params }, res) {
     Thought.findOneAndUpdate(
