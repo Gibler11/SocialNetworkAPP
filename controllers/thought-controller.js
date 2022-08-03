@@ -44,7 +44,7 @@ const commentController = {
     })
     .catch((err)=> res.json(err));
   },
-  
+    addReaction ({parmas})
       
       
       
