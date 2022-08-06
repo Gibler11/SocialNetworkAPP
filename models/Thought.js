@@ -1,8 +1,8 @@
 const {Schema, model, Types} = require("mongoose");
 const moment = require("moment");
-const { constants } = require("zlib");
+// const reaction = require("./Reaction");
 
-const ThoughtSchema = new Schema(
+const ThoughtSchema = new Schema (
     {
         thoughtText: {
             type: String,
@@ -14,26 +14,24 @@ const ThoughtSchema = new Schema(
             type: Date,
             default: Date.now,
             get: (createdAtVal) => moment(createdAtVal).format("MMM DD, YYYY [at] hh:mm a")
-        }
-    },
-    username: {
-        type: String,
-        required: true,
-        ref: 'User'
-    },
-    reactions: [ReactionSchema],
-)
-
-toJSON: {
-    virtuals: true,
-    getters: true
-  },
-  id: false
-}
+        },
+    
+        username: {
+            type: String,
+            required: true,
+            ref: 'User'
+        },
+        // reactions: [ReactionSchema],
+        toJSON: {
+            // virtuals: true,
+            // getters: true
+        },
+        id: false
+    }
 );
 
-ThoughtSchema.virtual('reactionCount').get(function()
-return this.replies.length;
+ThoughtSchema.virtual('reactionCount').get(function() {
+    return this.replies.length;
 });
 
 const Thought= model('Thought',ThoughtSchema);
