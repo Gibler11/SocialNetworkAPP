@@ -1,33 +1,36 @@
-const { Comment, Thought, User } = require('../models');
+const { Comment, Thought, User } = require('../models')
 
 const commentController = {
   // api thoughts ALL
-  getAllThought(req, res) {
-    Thought.find({})
-    .populate({ path: "reactions", select: "-_v"})
+  getAllThought: function(req, res) {
+    Thought.find()
     .select("-_v")
-    .then(thoughtData => res.json(thoughtData))
+    .then((dbthoughtData) => res.json(dbthoughtData);
+    })
     .catch((err) => {
       console.log(err);
-        res.status(400).json (err)
+      res.status(500).json (err)
     });
   },
 // THOUGHT ID
-  getThoughtbyID ({params},res){
-    Thought.findOne({_id: params.id})
-    .populate({ path: "reactions", select: "-_v"})
+  getThoughtbyID: function(req, res) {
+    Thought.findOne({_id: req.params.id})
     .select("-_v")
-    .then(thoughtData=>{
-    if (!thoughtData) {
-      res.status(400).json({ message: "invalid id"});
-      return;
+    .populate("reactions")
+    .populate("friends")
+    .then(dbthoughtData=>{
+    if (!dbthoughtData) {
+      return res.status(404).json({ message: "invalid id"});
     }
-    res.json(thoughtData);
+    res.json(dbthoughtData);
     })
-    .catch((err)=> res.json(err));
+    .catch((err)=> {
+      console.log(err);
+      res.status(500).json(err);
+    });
   },
-  // CREAT THOUGHT
-  createThought({params, body},res){
+  // CREATE THOUGHT
+  createThought: function({params, body},res){
     Thought.create(body)
     .then(({_id}) => {
       return User.findOneAndUpdate(
@@ -94,8 +97,9 @@ deleteReaction({ params }, res) {
         .catch(err => res.json(err));
     },
       //  delete a thought by id 
-    deleteThought({ params }, res) {
-      User.findOneAndDelete({ _id: params.id })
+    deleteThought: function({ params }, res) {
+      User.findOneAndDelete(
+        { _id: params.id })
         .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => res.json(err));
     },
