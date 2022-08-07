@@ -9,7 +9,7 @@ const userController = {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json(err)
+      res.status(400).json(err)
     });
   },
 // get User by ID with Thought
@@ -20,13 +20,13 @@ const userController = {
       .populate("friends")
       .then((dbUserData )=>{
         if (!dbUserData){
-            return res.status(404).json({ message: "User not found with this ID"});  
+            return res.status(400).json({ message: "User not found with this ID"});  
         }
         res.json(dbUserData);
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json(err);
+        res.status(400).json(err);
       });
     },
 
@@ -38,7 +38,7 @@ const userController = {
     })
       .catch((err) =>{
         console.log(err);
-        res.status(500).json(err);
+        res.status(400).json(err);
     });
   },
     // ADD FRiend
@@ -56,7 +56,7 @@ const userController = {
         })
     .catch((err)=> {
         console.log(err);
-        res.status(500).json(err);
+        res.status(400).json(err);
     });
   },
     // Update User
@@ -69,7 +69,7 @@ const userController = {
         }
         res.json(dbUserData);
         })
-      .catch(err => res.json(err));
+      .catch(err => res.status(400).json(err));
   },
   // Delete User
     deleteUser: function({ params }, res) {
@@ -92,7 +92,7 @@ const userController = {
   })
       .catch((err) => {
         console.log(err);
-        res.status(500).json(err);
+        res.status(400).json(err);
       })
   }}
 

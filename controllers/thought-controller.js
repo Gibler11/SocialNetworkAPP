@@ -8,7 +8,7 @@ const thoughtController = {
       .then((dbthoughtData) => res.json(dbthoughtData))
       .catch((err) => {
         console.log(err);
-        res.status(500).json(err);
+        res.status(400).json(err);
       });
   },
   // THOUGHT ID
@@ -25,7 +25,7 @@ const thoughtController = {
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json(err);
+        res.status(400).json(err);
       });
   },
   // CREATE THOUGHT
@@ -40,12 +40,12 @@ const thoughtController = {
       })
       .then((thoughtData) => {
         if (!thoughtData) {
-          res.status(400).json({ message: "invalid id" });
+          res.status(404).json({ message: "invalid id" });
           return;
         }
         res.json(thoughtData);
       })
-      .catch((err) => res.json(err));
+      .catch((err) => res.status(400).json(err));
   },
   // ADD REACTION
   addReaction({ parmas, body }, res) {
@@ -58,13 +58,13 @@ const thoughtController = {
         if (!dbthoughtData) {
           return res
             .status(404)
-            .json({ message: "thpught not found with this ID" });
+            .json({ message: "thought not found with this ID" });
         }
         res.json(dbthoughtData);
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json(err);
+        res.status(400).json(err);
       });
   },
   // DELETE REACTION
@@ -80,7 +80,7 @@ const thoughtController = {
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json(err);
+        res.status(400).json(err);
       });
   },
   // UPDATE THOUGHT ID
@@ -97,7 +97,7 @@ const thoughtController = {
         }
         res.json(dbThoughtData);
       })
-      .catch((err) => res.json(err));
+      .catch((err) => res.status(400).json(err));
   },
   //  delete a thought by id
   deleteThought: function ({ params }, res) {
@@ -112,7 +112,7 @@ const thoughtController = {
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json(err);
+        res.status(404).json(err);
       });
   },
 };
