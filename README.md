@@ -23,3 +23,5 @@ Worked with a tutor 2 times. Worked in a group with Bre, Dan, Tristin. Refer to 
 
 # Link 
 https://github.com/Gibler11/SocialNetworkAPP.git
+
+Video 1  https://drive.google.com/file/d/1IJQUDEAms20_5blPftM_YD-BF6tGVwgA/view
