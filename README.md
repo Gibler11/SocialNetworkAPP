@@ -18,7 +18,7 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
  Remove a user's associated thoughts when deleted.
 
  # Notes
-Worked with a tutor 2 times. Worked in a group with Bre, Dan, Tristin. Refer to 18.5 for help. Spent many hours on this.
+Worked with a tutor 3 times. Worked in a group with Bre, Dan, Tristin. Also worked with Bre on my own. Refer to 18.5 for help. Worked in Saturday Office two different SAturdays. Spent many hours on this challenge.
  
 
 # Link 

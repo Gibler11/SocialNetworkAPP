@@ -23,8 +23,8 @@ const ReactionSchema = new Schema({
     },
 
     createdAt: {
-        type: Data,
-        default: Data.now,
+        type: Date,
+        default: Date.now,
         timestamps: true
     }
 });

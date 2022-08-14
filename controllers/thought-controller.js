@@ -13,10 +13,11 @@ const thoughtController = {
   },
   // THOUGHT ID
   getThoughtbyId: function (req, res) {
-    Thought.findOne({ _id: req.params.id })
+    Thought.findOne({ _id: req.params.thoughtId })
+      // console.log(id)
       .select("-_v")
       .populate("reactions")
-      .populate("friends")
+      // .populate("friends")
       .then((dbthoughtData) => {
         if (!dbthoughtData) {
           return res.status(404).json({ message: "invalid id" });
@@ -31,7 +32,7 @@ const thoughtController = {
   // CREATE THOUGHT
   createThought: function ({ params, body }, res) {
     Thought.create(body)
-      .then(({ _id }) => {
+      .then(dbNewThought => {
         console.log(_id);
         console.log(body)
         return User.findOneAndUpdate(
@@ -50,10 +51,16 @@ const thoughtController = {
       .catch((err) => res.status(400).json(err));
   },
   // ADD REACTION
-  addReaction(req,res) {
+  addReaction({params, body}, res) {
     Thought.findOneAndUpdate(
-      { _id: req.params.thoughtId },
-      { $addToSet: { reaction: req.params.reactionID } },
+      { _id: params.thoughtId },
+      { $addToSet: 
+        { reactions: 
+          {reactionBody: body.reactionBody,
+            username: body.username
+        }
+      // req.reactionId 
+    } },
       { new: true }
     )
       .then((dbthoughtData) => {
@@ -71,7 +78,14 @@ const thoughtController = {
   },
   // DELETE REACTION
   deleteReaction({ params }, res) {
-    Thought.findOneAndUpdate({ _id: params.id })
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $pull: {
+        reactions: {
+          _id: params.reactionsId
+        }
+      }
+      }, { new: true})
       .then((dbReactionData) => {
         if (!dbReactionData) {
           return res
@@ -88,7 +102,7 @@ const thoughtController = {
   // UPDATE THOUGHT ID
 
   updateThought({ params, body }, res) {
-    Thought.findOneAndUpdate({ _id: params.id }, body, {
+    Thought.findOneAndUpdate({ _id: params.thoughtId }, body, {
       new: true,
       runValidators: true,
     })
@@ -103,7 +117,8 @@ const thoughtController = {
   },
   //  delete a thought by id
   deleteThought: function ({ params }, res) {
-    User.findOneAndDelete({ _id: params.id })
+    Thought.findOneAndDelete({ _id: params.thoughtId })
+    // console.log(thoughtId)
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
           return res
