@@ -18,10 +18,12 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
  Remove a user's associated thoughts when deleted.
 
  # Notes
-Worked with a tutor 3 times. Worked in a group with Bre, Dan, Tristin. Also worked with Bre on my own. Refer to 18.5 for help. Worked in Saturday Office two different SAturdays. Spent many hours on this challenge.
+Worked with a tutor 3 times. Worked in a group with Bre, Dan, Tristin. Also worked with Bre on my own. Worked invidually with lenadri. Refer to 18.5 for help. Worked in Saturday Office two different SAturdays. Spent many hours on this challenge.
  
 
 # Link 
 https://github.com/Gibler11/SocialNetworkAPP.git
 
-Video 1  https://drive.google.com/file/d/1IJQUDEAms20_5blPftM_YD-BF6tGVwgA/view
+Video 1  https://drive.google.com/file/d/1y2A-saJth9klazy_G731HkC_2D3AeB-Z/view
+Video 2  https://drive.google.com/file/d/1le4Qr7zGqHpvu_Mr1j9md-uio9dne6ls/view
+Video 3  https://drive.google.com/file/d/1HQGb8Pnr8mn8DhVjnh8lpNwzesQq1lEh/view
